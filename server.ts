@@ -22,8 +22,8 @@ import {SelectSpace} from './src/inputs/SelectSpace';
 import {SpaceModel} from './src/models/SpaceModel';
 import {TileType} from './src/TileType';
 
-const styles = fs.readFileSync('styles.css');
-const nes = fs.readFileSync('nes.min.css');
+const styles = fs.readFileSync('css/styles.css');
+const nes = fs.readFileSync('css/nes.min.css');
 const favicon = fs.readFileSync('favicon.ico');
 const mainJs = fs.readFileSync('dist/main.js');
 const prototype = fs.readFileSync('assets/Prototype.ttf');
@@ -55,13 +55,16 @@ function requestHandler(
 ): void {
   if (req.url !== undefined) {
     if (req.method === 'GET') {
-      if (
-        req.url === '/' ||
-                req.url.startsWith('/game?id=') ||
-                req.url.startsWith('/player?id=')) {
+      if (req.url === '/') {
+        serveMainPage(res);
+      } else if (req.url.startsWith('/setup') || req.url.startsWith('/game?id=') || req.url.startsWith('/player?id=')) {
         serveApp(res);
       } else if (req.url.startsWith('/api/player?id=')) {
         apiGetPlayer(req, res);
+      } else if (req.url.startsWith('/assets/')) {
+        serveAssets(req, res);
+      } else if (req.url.startsWith('/css/')) {
+        serveCSS(req, res);
       } else if (req.url === '/nes.min.css') {
         serveResource(res, nes);
       } else if (req.url === '/styles.css') {
@@ -119,9 +122,13 @@ function processInput(
   });
   req.once('end', function() {
     try {
+      console.warn("==========================================")
+      console.warn(player.getWaitingFor())
       const entity = JSON.parse(body);
+      console.warn(entity);
       player.process(entity);
       res.setHeader('Content-Type', 'application/json');
+      console.warn(player.getWaitingFor())
       res.write(getPlayer(player, game));
       res.end();
     } catch (err) {
@@ -422,15 +429,47 @@ function notFound(req: http.IncomingMessage, res: http.ServerResponse): void {
   res.end();
 }
 
+function serveMainPage(res: http.ServerResponse): void {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.write(fs.readFileSync('templates/main_page.html'));
+  res.end();
+}
+
 function serveApp(res: http.ServerResponse): void {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.write(fs.readFileSync('index.html'));
+  res.write(fs.readFileSync('templates/setup_game.html'));
   res.end();
 }
 
 function serveFavicon(res: http.ServerResponse): void {
   res.setHeader('Content-Type', 'image/x-icon');
   res.write(favicon);
+  res.end();
+}
+
+function serveCSS(req: http.IncomingMessage, res: http.ServerResponse): void {
+  const fileName: string = req.url!.substring('/css/'.length);
+  var buff: Buffer = fs.readFileSync('css/' + fileName);
+  if (fileName.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css');
+  } else {
+    return notFound(req, res);
+  }
+  res.write(buff);
+  res.end();
+}
+
+function serveAssets(req: http.IncomingMessage, res: http.ServerResponse): void {
+  const fileName: string = req.url!.substring('/assets/'.length);
+  var buff: Buffer = fs.readFileSync('assets/' + fileName);
+  if (fileName.endsWith('.png')) {
+    res.setHeader('Content-Type', 'image/png');
+  } else if (fileName.endsWith('.ttf')) {
+    res.setHeader('Content-Type', 'font/ttf');
+  } else {
+    return notFound(req, res);
+  }
+  res.write(buff);
   res.end();
 }
 

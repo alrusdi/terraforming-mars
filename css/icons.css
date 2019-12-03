@@ -1,0 +1,35 @@
+/* ICONS */
+.resource-icon {
+    width: 35px;
+    height: 34px;
+    display: inline-block;
+}
+
+.ri-megacredits {
+    background: url(../assets/icons.png) 0 0 no-repeat;
+}
+
+.ri-titanium {
+    background: url(../assets/icons.png) -35px 0 no-repeat;
+}
+
+.ri-steel {
+    background: url(../assets/icons.png) -70px 0 no-repeat;
+}
+
+.ri-plants {
+    background: url(../assets/icons.png) -106px 0 no-repeat;
+}
+
+.ri-energy {
+    background: url(../assets/icons.png) -141px 0 no-repeat;
+}
+
+.ri-heat {
+    background: url(../assets/icons.png) 0 -37px no-repeat;
+}
+
+.ri-rating {
+    width: 48px;
+    background: url(../assets/icons.png) -71px -79px no-repeat;
+}

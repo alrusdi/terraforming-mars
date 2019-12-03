@@ -58,38 +58,48 @@ export const CreateGameForm = Vue.component("create-game-form", {
     },
     template: `
         <div id="create-game">
-            <h1>Terraforming Mars</h1>
-            <h2>Create New Game</h2>
-            <div class="nes-container with-title" v-for="playerIndex in [1, 2, 3, 4, 5]">
-                <p class="nes-container.title">Player {{playerIndex}}</p>
-                <div class="nes-field">
-                    <label :for="'playerName' + playerIndex">Name:</label>
-                    <input v-model="players[playerIndex - 1].name" :id="'playerName' + playerIndex" type="text" class="nes-input" />
+            <div id="buttonsContainer">
+                <div id="buttonsContainer-header">
+                    <div id="titleContainer">
+                        <div class="title-style">SETUP NEW GAME</div>
+                    </div>
                 </div>
-                <label :for="'playerColor' + playerIndex">Color:</label>
-                <div class="nes-select">
-                    <select :id="'playerColor' + playerIndex" v-model="players[playerIndex - 1].color">
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
-                        <option value="yellow">Yellow</option>
-                        <option value="blue">Blue</option>
-                        <option value="black">Black</option>
-                    </select>
+            
+
+                <div id="buttonsContainer-body">
+                    <div class="nes-container with-title" v-for="playerIndex in [1, 2, 3, 4, 5]">
+                        <p class="nes-container.title">Player {{playerIndex}}</p>
+                        <div class="nes-field">
+                            <label :for="'playerName' + playerIndex">Name:</label>
+                            <input v-model="players[playerIndex - 1].name" :id="'playerName' + playerIndex" type="text" class="nes-input" />
+                        </div>
+                        <label :for="'playerColor' + playerIndex">Color:</label>
+                        <select :id="'playerColor' + playerIndex" v-model="players[playerIndex - 1].color">
+                            <option value="red">Red</option>
+                            <option value="green">Green</option>
+                            <option value="yellow">Yellow</option>
+                            <option value="blue">Blue</option>
+                            <option value="black">Black</option>
+                        </select>
+                        <label>
+                            <input type="checkbox" v-model="players[playerIndex - 1].beginner" />
+                            <span>Is Beginner</span>
+                        </label>
+                        <label>
+                            <input v-model="firstIndex" name="firstIndex" type="radio" v-bind:value="playerIndex - 1" />
+                            <span>Goes First</span>
+                        </label>
+                    </div>
                 </div>
-                <label>
-                    <input type="checkbox" class="nes-checkbox" v-model="players[playerIndex - 1].beginner" />
-                    <span>Is Beginner</span>
-                </label>
-                <label>
-                    <input v-model="firstIndex" class="nes-radio" type="radio" v-bind:value="playerIndex - 1" />
-                    <span>Goes First</span>
-                </label>
+
+                <div id="buttonsContainer-footer">
+                    <label>
+                            <input type="checkbox" v-model="prelude" />
+                            <span>Use prelude extension ?</span>
+                    </label>			
+                    <button class="button btn-req" v-on:click="createGame">Create Game</button>
+                </div>
             </div>
-            <label>
-                    <input type="checkbox" class="nes-checkbox" v-model="prelude" />
-                    <span>Use prelude extension ?</span>
-            </label>			
-            <button class="nes-btn is-primary" v-on:click="createGame">Create Game</button>
         </div>
     `
 });
