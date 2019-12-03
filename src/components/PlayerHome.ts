@@ -141,7 +141,7 @@ export const PlayerHome = Vue.component("player-home", {
                         <div id="buttonsContainer-header">
                             <div id="titleContainer">
                                 <div class="title-style">
-                                    Board
+                                    Actions
                                 </div>
                             </div>
                         </div>

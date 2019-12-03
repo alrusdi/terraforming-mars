@@ -51,3 +51,7 @@
     background: none;
     margin: 55px 0px 0px 75px
 }
+
+input[type="radio"]:checked + .filterDiv {
+    box-shadow: 0 0 5px 8px #a01b1b;
+}
