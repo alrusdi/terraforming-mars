@@ -25,7 +25,7 @@ export const PlayerHome = Vue.component("player-home", {
     },
     template: `
         <div id="player-home">
-            <div id="buttonsContainer">
+            <div id="buttonsContainer" style="position: sticky; top: -50px; z-index: 2;">
                 <div id="buttonsContainer-header">
                     <div id="titleContainer">
                         <div class="title-style">
@@ -33,6 +33,12 @@ export const PlayerHome = Vue.component("player-home", {
                         </div>
                     </div>
                 </div>
+                <div id="buttonsContainer-body">
+                    <div v-if="player.corporationCard">
+                        <player-resources :player="player"></player-resources>
+                    </div>
+                </div>
+                <div id="buttonsContainer-footer"></div>
             </div>
 
             <div style="max-width: 1280px; margin: 0 auto;">
@@ -58,11 +64,6 @@ export const PlayerHome = Vue.component("player-home", {
                 </div>
 
                 <div v-if="player.corporationCard">
-                    <div class="nofloat" style="position: sticky; top: -50px; z-index: 2;">
-                        <div class="block-title">Resources</div>
-                        <player-resources :player="player"></player-resources>
-                    </div>
-
                     <div class="nofloat">
                         <div class="block-title">Corporation Card</div>
                         <card hideCost="true" :card="player.corporationCard"></card>
