@@ -3,7 +3,8 @@
     vertical-align: top;
     font-family: Prototype;
     margin: 0 15px 0 0;
-    background: #BDBABA;
+    background:#000;
+    color:#bdbcbc;
 
 }
 
@@ -19,8 +20,9 @@
 
 .info-prod {
     font-size: 15px;
-    background: #aaa;
+    background: #b27e4d;
     padding: 2px 5px;
+    border: 2px solid #8f6136;
 }
 
 .info-prod-count {
@@ -54,4 +56,16 @@
 
 input[type="radio"]:checked + .filterDiv {
     box-shadow: 0 0 5px 8px #a01b1b;
+}
+
+#buttonsContainer {
+    width: 890px;
+}
+
+#buttonsContainer-body {
+    padding-top: 20px;
+}
+
+#titleContainer {
+    margin-left: 65px;
 }
