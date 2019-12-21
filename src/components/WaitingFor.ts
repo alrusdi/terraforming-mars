@@ -42,6 +42,15 @@ export const WaitingFor = Vue.component("waiting-for", {
                         const result = xhr.response;
                         if (result["result"] === "GO") {
                             (vueApp as any).$root.updatePlayer();
+                            navigator.serviceWorker.register('/sw.js');
+                            Notification.requestPermission(function(result) {
+                            if (result === 'granted') {
+                                navigator.serviceWorker.ready.then(function(registration) {
+                                registration.showNotification("It's your turn!");
+                                });
+                            }
+                            });
+                            /*
                             if (Notification.permission !== 'granted') {
                                 Notification.requestPermission();
                             }
@@ -51,6 +60,7 @@ export const WaitingFor = Vue.component("waiting-for", {
                                     body: "It's your turn!",
                                 });
                             }
+                            */
                             return
                         }
                         (vueApp as any).waitForUpdate();

@@ -30,6 +30,7 @@ const gameEndCSS = fs.readFileSync('game_end.css');
 const globsCSS = fs.readFileSync('globs.css');
 const favicon = fs.readFileSync('favicon.ico');
 const mainJs = fs.readFileSync('dist/main.js');
+const swJs = fs.readFileSync('sw.js');
 const prototype = fs.readFileSync('assets/Prototype.ttf');
 
 const games: Map<string, Game> = new Map<string, Game>();
@@ -90,6 +91,8 @@ function requestHandler(
         serveResource(res, prototype);
       } else if (req.url === '/main.js') {
         serveResource(res, mainJs);
+      } else if (req.url === '/sw.js') {
+        serveResource(res, swJs);
       } else if (pngs.has(req.url)) {
         servePng(res, pngs.get(req.url)!);
       } else if (req.url === '/favicon.ico') {
